@@ -1,0 +1,100 @@
+﻿@using PagedList.Mvc
+
+@model PagedList.IPagedList<WebCafeteria.Web.ViewModels.Venta.VentaListVm>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="d-flex justify-content-between w-75">
+    <h2>Ventas</h2>
+    <p>
+        <a class="btn btn-primary" href="@Url.Action("Create","Ventas")">
+            <i class="fa fa-plus"></i>
+            Nuevo
+        </a>
+    </p>
+</div>
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Msg"].ToString()
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+}
+@using (@Html.BeginForm("Index", "Ventas", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-auto">
+            <label>Mostrar:</label>
+        </div>
+        <div class="col-auto">
+            <select name="PageSize" class="form-select">
+                <option @if (((int)ViewBag.PageSize).ToString() == "5") { @Html.Raw("selected") ; } value="5">5</option>
+                <option @if (((int)ViewBag.PageSize).ToString() == "10") { @Html.Raw("selected") ; } value="10">10</option>
+                <option @if (((int)ViewBag.PageSize).ToString() == "15") { @Html.Raw("selected") ; } value="15">15</option>
+                <option @if (((int)ViewBag.PageSize).ToString() == "20") { @Html.Raw("selected") ; } value="20">20</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-secondary" type="submit">
+                <i class="fa fa-search"></i>
+                Aplicar
+            </button>
+        </div>
+    </div>
+}
+
+<table class="table table-bordered table-hover mt-3">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().VentaId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaVenta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Cliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Total)
+        </th>
+        <th>Acciones</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VentaId)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaVenta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td class="w-25">
+                <a class="btn btn-info" href="@Url.Action("Details", "Ventas", new { @id = item.VentaId })">
+                    <i class="fa fa-info"></i>
+                    Detalles
+                </a>
+            </td>
+
+        </tr>
+    }
+
+</table>
+    Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de: @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    pageSize = ViewBag.PageSize
+
+}))
+
+

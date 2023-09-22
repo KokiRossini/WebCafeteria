@@ -1,0 +1,160 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div>
+    <style>
+        body{
+            background-image: url(@Url.Content(WebCafeteria.Utilidades.WC.BackgroundImg));
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: top;
+        }
+        .div2 {
+            text-align: center;
+        }
+        .div1 {
+            text-align: center;
+            background: rgb(0, 0, 0,0.5);
+            margin:30px;
+        }
+        .img1 {
+/*            d-block mx-auto mb-4
+*/        }
+    </style>
+    <div class="row">
+
+        <div class="col-3">
+            <div class="card text-bg-primary mb-3" style="max-width: 18rem;">
+
+                <div class="card-header d-flex justify-content-between">
+                    <label class="fw-bold">Categorías</label>
+                    <i class="fa fa-2x fa-boxes"></i>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <h6>Cantidad:</h6>
+
+                        </div>
+                        <div class="col-sm-3">
+                            <h6>@ViewBag.cantidadCategorias</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-3">
+            <div class="card text-bg-secondary mb-3" style="max-width: 18rem;">
+                <div class="card-header d-flex justify-content-between">
+                    <label class="fw-bold">Productos</label>
+                    <i class="fa fa-2x fa-product-hunt"></i>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <h6>Cantidad:</h6>
+
+                        </div>
+                        <div class="col-sm-3">
+                            <h6>@ViewBag.cantidadProductos</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card text-bg-success mb-3" style="max-width: 18rem;">
+                <div class="card-header d-flex justify-content-between">
+                    <label class="fw-bold">Clientes</label>
+                    <i class="fa fa-2x fa-user"></i>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <h6>Cantidad:</h6>
+
+                        </div>
+                        <div class="col-sm-3">
+                            <h6>@ViewBag.cantidadClientes</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="card text-bg-danger mb-3" style="max-width: 18rem;">
+                <div class="card-header d-flex justify-content-between">
+                    <label class="fw-bold">Ventas</label>
+                    <i class="fa fa-2x fa-shopping-bag"></i>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <h6>Cantidad:</h6>
+
+                        </div>
+                        <div class="col-sm-3">
+                            <h6>@ViewBag.cantidadVentas</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <img class="d-block mx-auto mb-4" src="@Url.Content(WebCafeteria.Utilidades.WC.LogoDeCafeteria)" alt="" width="200" height="200">
+
+    <div class="div1">
+        <h1 class="display-5 fw-bold" style="color:white">Cafeteria Web</h1>
+
+        <div class="div2, col-lg-8 mx-auto">
+            <p class="lead mb-4" style="color:white">
+
+                ¡Bienvenidos a nuestra cafetería virtual! Aquí, podrás disfrutar de tus bebidas
+                y bocadillos favoritos. Explora nuestro catálogo y déjate tentar por nuestras
+                deliciosas ofertas. ¡Comienza a llenar tu carrito de sabores!
+
+            </p>
+            @*<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Primary button</button>
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button>
+                </div>*@
+        </div>
+    </div>
+    @*<div class="div2">
+        <p>10% opacity.</p>
+    </div>*@
+
+</div>
+@*<main>
+        <section class="row" aria-labelledby="aspnetTitle">
+            <h1 id="title">ASP.NET</h1>
+            <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+            <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
+        </section>
+
+        <div class="row">
+            <section class="col-md-4" aria-labelledby="gettingStartedTitle">
+                <h2 id="gettingStartedTitle">Getting started</h2>
+                <p>
+                    ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+                    enables a clean separation of concerns and gives you full control over markup
+                    for enjoyable, agile development.
+                </p>
+                <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+            </section>
+            <section class="col-md-4" aria-labelledby="librariesTitle">
+                <h2 id="librariesTitle">Get more libraries</h2>
+                <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+                <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+            </section>
+            <section class="col-md-4" aria-labelledby="hostingTitle">
+                <h2 id="hostingTitle">Web Hosting</h2>
+                <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+                <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+            </section>
+        </div>
+    </main>*@

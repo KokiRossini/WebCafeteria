@@ -1,0 +1,169 @@
+﻿@using PagedList.Mvc
+
+@model PagedList.IPagedList<WebCafeteria.Web.ViewModels.TamañoProducto.TamañoProductoListVm>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="d-flex justify-content-between">
+    <h2>Productos en Stock</h2>
+    @if (User.IsInRole("Admin"))
+    {
+        <p>
+            <a class="btn btn-primary" href="@Url.Action("Create","TamañoProductos")">
+                <i class="fa fa-plus"></i>
+                Nuevo
+            </a>
+        </p>
+    }
+</div>
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Msg"].ToString()
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+}
+@using (@Html.BeginForm("Index", "TamañoProductos", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-auto">
+            <label>Mostrar:</label>
+        </div>
+        <div class="col-auto">
+            <select name="PageSize" class="form-select">
+                <option @if (((int)ViewBag.PageSize).ToString() == "5") { @Html.Raw("selected") ; } value="5">5</option>
+                <option @if (((int)ViewBag.PageSize).ToString() == "10") { @Html.Raw("selected") ; } value="10">10</option>
+                <option @if (((int)ViewBag.PageSize).ToString() == "15") { @Html.Raw("selected") ; } value="15">15</option>
+                <option @if (((int)ViewBag.PageSize).ToString() == "20") { @Html.Raw("selected") ; } value="20">20</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-secondary" type="submit">
+                <i class="fa fa-search"></i>
+                Aplicar
+            </button>
+        </div>
+    </div>
+}
+
+
+<table class="table table-bordered table-hover mt-3">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Imagen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreProducto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreTamaño)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().PrecioUnitario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Stock)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Suspendido)
+        </th>
+
+        <th class="w-25">Acciones</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @if (item.Imagen != null)
+                {
+                    <img src="@Url.Content(WebCafeteria.Utilidades.WC.ProductosImagenesFolder+item.Imagen)" style="width:50px; height:50px" />
+                }
+                else
+                {
+                    <img src="@Url.Content(WebCafeteria.Utilidades.WC.SinImagenDisponible)" style="width:50px; height:50px" />
+
+                }
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreProducto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreTamaño)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioUnitario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Suspendido)
+            </td>
+            @if (User.IsInRole("Admin") || User.IsInRole("Cliente"))
+            {
+                <td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-sm btn-warning" href="@Url.Action("Edit","TamañoProductos",new {id=item.TamañoProductoId})">
+                            <i class="fa fa-edit"></i>
+                            Editar
+                        </a>
+                        <a class="btn btn-sm btn-info" href="@Url.Action("Details","TamañoProductos",new {id=item.TamañoProductoId})">
+                            <i class="fa fa-list"></i>
+                            Detalles
+                        </a>
+                        <a class="btn btn-sm btn-danger" href="@Url.Action("Delete","TamañoProductos", new {id=item.TamañoProductoId})">
+                            <i class="fa fa-trash"></i>
+                            Borrar
+                        </a>
+                    }
+                    @if (User.IsInRole("Cliente"))
+                    {
+                        using (Html.BeginForm("AddToCart", "Carrito", FormMethod.Post))
+                        {
+                            @*<a class="btn btn-sm btn-outline-success" href="@Url.Action("#", "TamañoProductos", new { id = item.TamañoProductoId })">
+                    <i class="fa fa-cash-register"></i>
+                    Comprar
+                </a>*@
+                            <a class="btn btn-sm btn-info" href="@Url.Action("Details", "TamañoProductos", new { id = item.TamañoProductoId })">
+                                <i class="fa fa-list"></i>
+                                Detalles
+                            </a>
+                            @Html.Hidden("tamañoProductoId", item.TamañoProductoId)
+                            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+
+                            <button type="submit" class="btn btn-outline-danger">
+                                Comprar
+                            </button>
+
+                        }
+
+                    }
+                </td>
+            }
+            else
+            {
+                <td>
+                    <a class="btn btn-sm btn-info" href="@Url.Action("Details","TamañoProductos",new {id=item.TamañoProductoId})">
+                        <i class="fa fa-list"></i>
+                        Detalles
+                    </a>
+                </td>
+
+            }
+
+        </tr>
+    }
+
+</table>
+    Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de: @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    pageSize = ViewBag.PageSize
+
+}))
